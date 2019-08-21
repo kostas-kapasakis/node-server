@@ -10,7 +10,8 @@ const httpOptions = {
     cert: fs.readFileSync('./config/cert.pem')
 }
 
-https.createServer(httpOptions , app).listen(PORT ,  () => {
-    console.log('Express server listening on port ' + PORT);
-
-});
+https
+    .createServer(httpOptions , app)
+    .listen(PORT ,  () => {
+        console.log('Express server listening on port ' + PORT);
+    });
