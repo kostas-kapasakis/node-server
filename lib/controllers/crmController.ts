@@ -1,10 +1,11 @@
 import * as mongoose from 'mongoose';
 import { ContactSchema} from '../models/crmModel';
 import {Request, Response} from 'express';
+import Contact, { IContact } from '../models/crmModel';
 
-const Contact = mongoose.model('Contact', ContactSchema);
 
 export class ContactController {
+
 
     public addNewContact (req: Request, res: Response) {                
         let newContact = new Contact(req.body);
@@ -46,7 +47,7 @@ export class ContactController {
     }
 
     public deleteContact (req: Request, res: Response) {           
-        Contact.remove({ _id: req.params.contactId }, (err, contact) => {
+        Contact.remove({ _id: req.params.contactId }, (err) => {
             if(err){
                 res.send(err);
             }

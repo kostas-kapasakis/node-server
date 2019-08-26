@@ -1,6 +1,13 @@
-import * as mongoose from 'mongoose';
+import { Schema, Document, model } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface IContact extends Document {
+    firstName:string;
+    lastName:string;
+    email:string;
+    company:string;
+    phone:number;
+    created_date:Date;
+}
 
 export const ContactSchema = new Schema({
     firstName: {
@@ -25,3 +32,5 @@ export const ContactSchema = new Schema({
         default: Date.now
     }
 });
+
+export default model<IContact>('Contact', ContactSchema);

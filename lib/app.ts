@@ -9,24 +9,23 @@ class App {
 
     public app: express.Application;
     public routePrv: Routes = new Routes();
-    public mongoUrl: string = 'mongodb://localhost:27017/Crmdb';  
+    public mongoUrl: string = 'mongodb://localhost:27017/Crmdb';
 
 
 
     constructor() {
         this.app = express();
-        this.config(); 
+        this.config();
         this.routePrv.routes(this.app);
-        this.mongoSetup();     
-       
+        this.mongoSetup();
+
     }
 
-    private async mongoSetup(): Promise<void>{
-        mongoose.Promise = global.Promise;
-        await mongoose.connect(this.mongoUrl,{useNewUrlParser:true});    
+    private async mongoSetup(): Promise<void> {
+        await mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
     }
 
-    private config(): void{
+    private config(): void {
         // support application/json type post data
         this.app.use(bodyParser.json());
         //support application/x-www-form-urlencoded post data
