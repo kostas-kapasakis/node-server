@@ -1,9 +1,7 @@
-// lib/server.ts
 import app from "./app";
 import * as https from 'https';
 import * as fs from 'fs';
-
-const PORT = 3000;
+import {logger} from '../src/utils/logger';
 
 const httpOptions = {
     key: fs.readFileSync('./config/key.pem'),
@@ -12,6 +10,7 @@ const httpOptions = {
 
 https
     .createServer(httpOptions , app)
-    .listen(PORT ,  () => {
-        console.log('Express server listening on port ' + PORT);
+    .listen(app.get('port') ,  () => {
+        logger.log('info','Express server listening on port ' + app.get('port'));
     });
+

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node ./lib/server.ts",
+    "dev": "ts-node ./src/server.ts",
     "start": "nodemon ./dist/server.js",
     "prod": "npm run build && npm run start"
   },
@@ -17,10 +17,13 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-force-ssl": "^0.3.2",
     "fs": "0.0.1-security",
     "inversify": "^5.0.1",
     "mongoose": "^5.6.10",
     "nodemon": "^1.19.1",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "routing-controllers": "^0.7.7",
+    "winston": "^3.2.1"
   }
 }
