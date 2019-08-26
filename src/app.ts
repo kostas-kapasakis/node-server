@@ -2,11 +2,11 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 import * as cors from 'cors';
-import { useExpressServer } from "routing-controllers";
 import "reflect-metadata";
 
 import * as forceSSl from 'express-force-ssl';
 import * as customLogger from "./utils/logger";
+import { requestsInterceptor } from "./middlewares/requests-interceptor";
 
 class App {
 
@@ -35,10 +35,7 @@ class App {
     }
 
     private config(): void {
-        useExpressServer(this.app, {
-            routePrefix: "/api",
-            controllers: [this.baseDir + "/modules/**/controllers/*{.js,.ts}"],
-        });
+        this.app.use(requestsInterceptor);
 
         this.app.use(bodyParser.json());
 
@@ -51,6 +48,8 @@ class App {
         this.app.use(forceSSl);
 
         this.app.use(express.static(__dirname));
+
+
     }
 
 }

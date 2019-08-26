@@ -1,25 +1,24 @@
-import { JsonController, OnUndefined, Param, Body, Get, Post, Put, Delete } from "routing-controllers";
-import { Response } from 'express';
-import "reflect-metadata";
+import { Controller, Get, Post, Put, Delete } from '@overnightjs/core';
+import {Request,Response } from 'express';
 
 import Merchant, { IMerchant } from '../models/merchant';
 import { logger } from "utils/logger";
 
-@JsonController()
+@Controller('api/merchants')
 export class MerchantsController {
 
-    @Post("/merchants")
-    public createMerchant(@Body() merchant: IMerchant, res: Response) {
-        let merchantToAdd: IMerchant = new Merchant(merchant);
+    @Post("/add-merchant")
+    public createMerchant(req: Request, res: Response) {
+        let merchantToAdd: IMerchant = new Merchant(req.body);
 
-        merchant.save((err, merchantToAdd) => {
+        merchantToAdd.save((err, merchantToAdd) => {
             if (err) {
                 res.send(err);
             }
             res.json(merchantToAdd);
         });
     }
-    @Get("/merchants")
+    @Get("")
     public getMercants(res: Response) {
         logger.log('info','Inside the get Merchants request');
         Merchant.find({}, (err, merchant) => {
@@ -30,19 +29,18 @@ export class MerchantsController {
         });
     }
 
-    @Get("/merchants/:id")
-    @OnUndefined(404)
-    public getMerchantWithID(@Param("merchantId") id: string, res: Response) {
-        Merchant.findById(id, (err, merchant) => {
+    @Get(":id")
+    public getMerchantWithID(req: Request, res: Response) {
+        Merchant.findById(req.params.merchantId, (err, merchant) => {
             if (err) {
                 res.send(err);
             }
             res.json(merchant);
         });
     }
-    @Put("/merchants/:id")
-    public updateMerchant(@Param("merchantId") id: string, @Body() merchant: IMerchant, res: Response) {
-        Merchant.findOneAndUpdate({ _id: id }, merchant, { new: true }, (err, merchant) => {
+    @Put(":id")
+    public updateMerchant(req: Request, res: Response) {
+        Merchant.findOneAndUpdate({ _id: req.params.merchantId }, req.body, { new: true }, (err, merchant) => {
             if (err) {
                 res.send(err);
             }
@@ -50,9 +48,9 @@ export class MerchantsController {
         });
     }
 
-    @Delete("/merchants/:id")
-    public deleteMerchant(@Param("merchantId") id: string, res: Response) {
-        Merchant.remove({ _id: id }, (err) => {
+    @Delete(":id")
+    public deleteMerchant(req: Request, res: Response) {
+        Merchant.remove({ _id: req.params.merchantId }, (err) => {
             if (err) {
                 res.send(err);
             }
