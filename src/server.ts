@@ -82,6 +82,10 @@ export class CustomServer extends Server implements ICustomExpressServer {
 
   private config(): void {
     this.app.set("port", process.env.PORT || 3000);
+
+    this.app.get('/', (req, res) =>  {
+      res.send('Hello from server')
+    })
   }
 
   public start(): void {
